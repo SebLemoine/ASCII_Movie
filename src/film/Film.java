@@ -27,13 +27,11 @@ public class Film {
 	public void nouvellePageCopie(int numeroPage ) {
 		/** TODO:nouvellePageCopie */
 		--numeroPage;
-		Page p;
+		Page p = new Page();
 		if(this.estDansLeTableau(numeroPage)){
-			p = this.test.get(numeroPage);
+			//TODO: la copie de la page
 			this.test.add(p);
 		}
-		else System.err.println("error : choisir un nombre entre 1 et" + this.test.size());
-			
 	}
 	public void changerDePage(int numeroPage) {
 		/** TODO:changerDePage */
@@ -50,6 +48,7 @@ public class Film {
 		/** TODO:pageInferieur */
 		this.numeroDePageCourante--;
 		if(!this.estDansLeTableau(this.numeroDePageCourante)) numeroDePageCourante++;
+		
 	}
 	public void supprimerPageCourante() {
 		/** TODO:supprimerPageCourante */
@@ -64,32 +63,75 @@ public class Film {
 		if(numeroPage == this.numeroDePageCourante){
 			supprimerPageCourante();
 		}else{
-			this.test.remove(this.numeroDePageCourante);
+			this.test.remove(numeroPage);
 			this.numeroDePageCourante=0;
 		}
 		
 	}
 	public void changePositionPageCourante(int nouvellePosition) {
 		/** TODO:changePositionPageCourante */
+		if(estDansLeTableau(nouvellePosition))
 		this.numeroDePageCourante = nouvellePosition;
 	}
 	public void changePosition(int numeroPage, int nouvellePosition ) {
 		/** TODO:changePosition */
+		Page p = test.get(numeroPage);
+		test.remove(numeroPage);
+		test.add(--nouvellePosition, p);
 	}
 	public void ActualiserPageCourante(){
 		/** TODO:ActualiserPageCourante */
+		//test.get(this.numeroDePageCourante).actualiser();
 	}
 	public void AfficherPageCourante() {
 		/** TODO:AfficherPageCourante */
+		//test.get(this.numeroDePageCourante).toString(numeroDePageCourante);
 	}	
-	public void play() {
+	public void play() throws InterruptedException  {
 		/** TODO:play */
+		for (Page page : test) {
+			System.out.println();
+			page.toString();
+			Thread.sleep(1000);
+		}
 	}
+	
+	public List<Page> getTest() {
+		return test;
+	}
+	public String getTitre() {
+		return titre;
+	}
+	public void setTitre(String titre) {
+		this.titre = titre;
+	}
+	public String getCreateur() {
+		return createur;
+	}
+	public void setCreateur(String createur) {
+		this.createur = createur;
+	}
+	public int getTailleXPage() {
+		return tailleXPage;
+	}
+	public int getTailleYPage() {
+		return tailleYPage;
+	}
+	public int getNumeroDePageCourante() {
+		return numeroDePageCourante+1;
+	}
+	public int getNombreDePage(){
+		return getTest().size();
+	}
+	
 	private boolean estDansLeTableau(int numero){
 		if( 0 <= numero && numero < this.test.size())
 			return true;
-		else
+		else{
+			System.err.println("error : choisir un nombre entre 1 et" + this.test.size());
 			return false;
+		}
+			
 	}
 	
 	
